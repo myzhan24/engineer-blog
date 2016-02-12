@@ -24,17 +24,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <url-pattern>/ofysign</url-pattern>
     </servlet-mapping>
     
-    
-    <servlet>
-        <servlet-name>sign</servlet-name>
-        <servlet-class>guestbook.SignGuestbookServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>sign</servlet-name>
-        <url-pattern>/sign</url-pattern>
-    </servlet-mapping>
-    
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
@@ -46,7 +35,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</filter-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>guestbook.jsp</welcome-file>
+		<welcome-file>ofyguestbook.jsp</welcome-file>
 	</welcome-file-list>
 	
 </web-app>

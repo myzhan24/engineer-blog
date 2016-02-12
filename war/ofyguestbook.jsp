@@ -60,7 +60,7 @@ Collections.sort(greetings);
             pageContext.setAttribute("greeting_content",
                                      greeting.getContent());
             
-                pageContext.setAttribute("greeting_user",
+                pageContext.set	Attribute("greeting_user",
                                          greeting.getUser());
                 %>
                 <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
@@ -73,11 +73,10 @@ Collections.sort(greetings);
     }
 %>
  
-    <form action="/ofysign" method="post">
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Post Greeting" /></div>
-      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
+    <form action="/ofysign" method="post"> <div><textarea name="content"
+      rows="3" cols="60"></textarea></div> <div><input type="submit" value="Post
+      Greeting" /></div> <input type="hidden" name="guestbookName"
+      value="${fn:escapeXml(guestbookName)}"/> </form>
  
   </body>
 </html>
