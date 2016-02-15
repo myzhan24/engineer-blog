@@ -1,11 +1,21 @@
 h2 {
 	text-align: left;
 }
-blogEntry{
+blog{
 	text-align: left;
 }
 top{
 	text-align:right;
+}
+date{
+	font-size: 65%;
+	color: #8e8e8e;
+}
+signature{
+	font-size: 77%;
+}
+grey{
+	color: #cbcbcb;
 }
 body {
    font-family: Verdana, Helvetica, sans-serif;

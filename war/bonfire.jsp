@@ -36,12 +36,12 @@
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
-<top><p>Greetings, ${fn:escapeXml(user.nickname)} 
+<top><p>Greetings, ${fn:escapeXml(user.nickname)}.
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">log out</a></p></top>
 <%
     } else {
 %>
-<top><p>Greetings.
+<top><p>Greetings traveler.
 <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
 to post.</p></top>
 <%
@@ -53,9 +53,16 @@ to post.</p></top>
   style="width:800;height:600px;">
 	
 	<p><i>Caressed by the warm glow, the traveler decided to unwind. He reflected on his past life as he gazed idly at the heart of the fire...</i></p>
+    <a href="note.jsp">Toss a note in</a>
+    <br>
+    <br>
+    <hr>
+      
+    <blog>
     
-    <p>He saw the messages of past visitors appear near the base of the flame.</p>
+    
   
+
 
 <%
     // Run an ancestor query to ensure we see the most up-to-date
@@ -66,12 +73,14 @@ to post.</p></top>
 
     if (greetings.isEmpty()) {
         %>
-        <blogEntry><p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p></blogEntry>
+        <h2>The cinders show no messages</h2>
         <%
     } else {
         %>
-        <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
+        <h2>Messages in The Cinders</h2> 
+        <br>
         <%
+        int i = 0;
         for (Greeting greeting : greetings) {
             pageContext.setAttribute("greeting_content", greeting.getContent());
             pageContext.setAttribute("greeting_user", greeting.getUser());
@@ -79,23 +88,24 @@ to post.</p></top>
             pageContext.setAttribute("greeting_title", greeting.getTitle());
             
                 %>
-                <blogEntry><p>${fn:escapeXml(greeting_title)}</p></blogEntry>
+                <blogEntry><p><b>${fn:escapeXml(greeting_title)}</b></p></blogEntry>
                 <%
             
             %>
             <blogEntry><blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote></blogEntry>
-            <blogEntry><blockquote><b>-${fn:escapeXml(greeting_user.nickname)}</b> <br>circa ${fn:escapeXml(greeting_date)}</br></blockquote></blogEntry>
+            <blogEntry><blockquote><b><signature>- ${fn:escapeXml(greeting_user.nickname)}</signature></b> <br><date>circa ${fn:escapeXml(greeting_date)}</date></br></blockquote></blogEntry>
+            
+            <br>
             <%
+            i++;
+            if(i > 3)
+            	break;
         }
     }
 %>
- 
-    <form action="/bonfire" method="post"> 
-    	<div><textarea name="title" rows = "1" cols="60"></textarea></div>
-    	<div><textarea name="content" rows="3" cols="60"></textarea></div>
-    	<div><input type="submit" value="New Post" /></div>
-    	<input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
+<a href="allposts.jsp">Look closer into the flames</a>
+    
+    </blog>
  
   </body>
 </html>

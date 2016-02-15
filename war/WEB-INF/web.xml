@@ -25,6 +25,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>Note</servlet-name>
+        <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>Note</servlet-name>
+        <url-pattern>/note</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>Bonfire</servlet-name>
         <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
     </servlet>
