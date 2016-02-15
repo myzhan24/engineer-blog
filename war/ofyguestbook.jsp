@@ -20,7 +20,7 @@
   
   <h2>Rain on Glass</h2>
   <h2>
-  <img src="glass.jpg" alt="Glass View"
+  <img src="res/glass.jpg" alt="Glass View"
   style="width:304px;height:228px;">
   </h2>
   

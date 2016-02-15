@@ -26,15 +26,23 @@ public class OfySignGuestbookServlet extends HttpServlet {
 
         User user = userService.getCurrentUser();
 
-        String guestbookName = req.getParameter("guestbookName");
+//        String guestbookName = req.getParameter("guestbookName");
         String content = req.getParameter("content");
         String title = req.getParameter("title");
-        Greeting greeting = new Greeting(user,title, content);
-
-        ofy().save().entity(greeting).now();  
-
+        
+        System.out.println(user.toString() + "\t" + content.toString() + "\t" + title.toString());
+        if(user.toString().isEmpty() || content.isEmpty() || title.isEmpty())
+        {
+        	System.out.println("skipping this because something's empty!");
+        	
+        }
+        else
+        {
+        	Greeting greeting = new Greeting(user,title,content);
+        	ofy().save().entity(greeting).now();  
+        }
         //resp.sendRedirect("/ofyguestbook.jsp?guestbookName=" + guestbookName);
-        resp.sendRedirect("/bonfire.jsp?guestbookName=" + guestbookName);
+        resp.sendRedirect("/bonfire.jsp");
     }
 
 }

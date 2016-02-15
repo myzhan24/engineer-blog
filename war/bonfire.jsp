@@ -12,23 +12,18 @@
 <html>
   <head>
    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+   <title>Bonfire</title>
   </head>
   
   
   
-  <body>
+  	<body>
   
+  	<p><lightGrey>This is a simple blog that allows anyone signed into a google account post. It is in the theme of a bonfire that keeps any written messages burned in its flames. Created by Matthew Zhan for EE 461L SP 2016</lightGrey></p>
+	<hr>  
     
 <%
 	ObjectifyService.register(Greeting.class);
-	
-    String guestbookName = request.getParameter("guestbookName");
-    
-    if (guestbookName == null) {
-        guestbookName = "default";
-    }
-    
-    pageContext.setAttribute("guestbookName", guestbookName);
     
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
@@ -36,32 +31,31 @@
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
-<top><p>Greetings, ${fn:escapeXml(user.nickname)}.
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">log out</a></p></top>
+<top><p>Greetings, ${fn:escapeXml(user.nickname)}
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 <%
     } else {
 %>
 <top><p>Greetings traveler.
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to post.</p></top>
+<a href="<%= userService.createLoginURL(request.getRequestURI()) %>"> Sign In</a>
+to post</p></top>
 <%
     }
     %>
   
   
-  <img src="bonfire.jpg" alt="Fire at Night"
+  <img src="res/bonfire.jpg" alt="Fire at Night"
   style="width:800;height:600px;">
 	
 	<p><i>Caressed by the warm glow, the traveler decided to unwind. He reflected on his past life as he gazed idly at the heart of the fire...</i></p>
     <a href="note.jsp">Toss a note in</a>
-    <br>
     <br>
     <hr>
       
     <blog>
     
     
-  
+ 
 
 
 <%
@@ -87,13 +81,10 @@ to post.</p></top>
             pageContext.setAttribute("greeting_date", greeting.getDate());
             pageContext.setAttribute("greeting_title", greeting.getTitle());
             
-                %>
-                <blogEntry><p><b>${fn:escapeXml(greeting_title)}</b></p></blogEntry>
-                <%
-            
-            %>
-            <blogEntry><blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote></blogEntry>
-            <blogEntry><blockquote><b><signature>- ${fn:escapeXml(greeting_user.nickname)}</signature></b> <br><date>circa ${fn:escapeXml(greeting_date)}</date></br></blockquote></blogEntry>
+           %>
+			<blogTitle><p>${fn:escapeXml(greeting_title)}</p></blogTitle>
+			<blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote>
+            <blockquote><b><signature>- ${fn:escapeXml(greeting_user.nickname)}</signature></b> <br><date>circa ${fn:escapeXml(greeting_date)}</date></br></blockquote>
             
             <br>
             <%

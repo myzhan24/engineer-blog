@@ -4,6 +4,14 @@ h2 {
 blog{
 	text-align: left;
 }
+blogTitle{
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 120%;
+	color: #bcbcbc;
+   	background-color: #000000;
+   	font-weight: bold;
+}
+
 top{
 	text-align:right;
 }
@@ -14,8 +22,20 @@ date{
 signature{
 	font-size: 77%;
 }
+lightGrey{
+	color: #7d7d7d; 
+}
 grey{
 	color: #cbcbcb;
+}
+hr{
+	display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+    border-color: #7d7d7d;
 }
 body {
    font-family: Verdana, Helvetica, sans-serif;

@@ -36,17 +36,17 @@
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
-<top><p>Greetings, ${fn:escapeXml(user.nickname)}.
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">log out</a></p></top>
+<top><p>Greetings, ${fn:escapeXml(user.nickname)}
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 
 
-<img src="sparks.gif" alt="Fire Bowl"
+<img src="res/sparks.gif" alt="Fire Bowl"
   style="width:800;height:600px;">
 
 <p><i>The traveler eagerly took out his journal and began writing...</i></p>
 	<a href="bonfire.jsp">Return</a>
     <br>
-    <br>
+    
     <hr>
       
    
@@ -68,15 +68,15 @@
     } else {
 %>
 <top><p>Greetings traveler.
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to post.</p></top>
+<a href="<%= userService.createLoginURL(request.getRequestURI()) %>"> Sign In</a>
+to post</p></top>
 
-<img src="sparks.gif" alt="Fire Bowl"
+<img src="res/sparks.gif" alt="Fire Bowl"
   style="width:800;height:600px;">
   
   <p><i>The traveler eagerly took out his journal and tried to remember who he was...</i></p>
 	
-	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a>
 	<a href="bonfire.jsp">Return</a>
   
 <%
