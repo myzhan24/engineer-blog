@@ -12,18 +12,14 @@
 <html>
   <head>
    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+   
   </head>
   
   
   
   <body>
-  
-  <h2>Rain on Glass</h2>
-  <h2>
-  <img src="glass.jpg" alt="Glass View"
-  style="width:304px;height:228px;">
-  </h2>
-  
+  	<h1>All Blog Posts</h1>
+ 
   
 <%
 	ObjectifyService.register(Greeting.class);

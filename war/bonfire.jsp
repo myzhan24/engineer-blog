@@ -18,13 +18,7 @@
   
   <body>
   
-  <h2>Rain on Glass</h2>
-  <h2>
-  <img src="glass.jpg" alt="Glass View"
-  style="width:304px;height:228px;">
-  </h2>
-  
-  
+    
 <%
 	ObjectifyService.register(Greeting.class);
 	
@@ -42,17 +36,27 @@
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+<top><p>Greetings, ${fn:escapeXml(user.nickname)} 
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">log out</a></p></top>
 <%
     } else {
 %>
-<p>Hello!
+<top><p>Greetings.
 <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
+to post.</p></top>
 <%
     }
     %>
+  
+  
+  <img src="bonfire.jpg" alt="Fire at Night"
+  style="width:800;height:600px;">
+	
+	<p><i>Caressed by the warm glow, the traveler decided to unwind. He reflected on his past life as he gazed idly at the heart of the fire...</i></p>
+    
+    <p>He saw the messages of past visitors appear near the base of the flame.</p>
+  
+
 <%
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
@@ -62,7 +66,7 @@ to include your name with greetings you post.</p>
 
     if (greetings.isEmpty()) {
         %>
-        <p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p>
+        <blogEntry><p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p></blogEntry>
         <%
     } else {
         %>
@@ -72,19 +76,21 @@ to include your name with greetings you post.</p>
             pageContext.setAttribute("greeting_content", greeting.getContent());
             pageContext.setAttribute("greeting_user", greeting.getUser());
             pageContext.setAttribute("greeting_date", greeting.getDate());
+            pageContext.setAttribute("greeting_title", greeting.getTitle());
             
                 %>
-                <p> ${fn:escapeXml(greeting_date)} <b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
+                <blogEntry><p>${fn:escapeXml(greeting_title)}</p></blogEntry>
                 <%
             
             %>
-            <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+            <blogEntry><blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote></blogEntry>
+            <blogEntry><blockquote><b>-${fn:escapeXml(greeting_user.nickname)}</b> <br>circa ${fn:escapeXml(greeting_date)}</br></blockquote></blogEntry>
             <%
         }
     }
 %>
  
-    <form action="/ofysign" method="post"> 
+    <form action="/bonfire" method="post"> 
     	<div><textarea name="title" rows = "1" cols="60"></textarea></div>
     	<div><textarea name="content" rows="3" cols="60"></textarea></div>
     	<div><input type="submit" value="New Post" /></div>

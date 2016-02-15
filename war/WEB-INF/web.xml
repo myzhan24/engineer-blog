@@ -15,6 +15,27 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+        <servlet-name>AllPosts</servlet-name>
+        <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>AllPosts</servlet-name>
+        <url-pattern>/allposts</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Bonfire</servlet-name>
+        <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>Bonfire</servlet-name>
+        <url-pattern>/bonfire</url-pattern>
+    </servlet-mapping>
+    
+	
+	<servlet>
         <servlet-name>ofysign</servlet-name>
         <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
     </servlet>
@@ -35,7 +56,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</filter-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>ofyguestbook.jsp</welcome-file>
+		<welcome-file>bonfire.jsp</welcome-file>
 	</welcome-file-list>
 	
 </web-app>

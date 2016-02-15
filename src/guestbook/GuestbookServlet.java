@@ -24,7 +24,6 @@ public class GuestbookServlet extends HttpServlet {
               throws IOException {
 
         UserService userService = UserServiceFactory.getUserService();
-
         User user = userService.getCurrentUser();
 
  
@@ -32,15 +31,11 @@ public class GuestbookServlet extends HttpServlet {
         if (user != null) {
 
             resp.setContentType("text/plain");
-
             resp.getWriter().println("Hello, " + user.getNickname());
 
         } else {
-
             resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
-
         }
-
     }
 
 }
