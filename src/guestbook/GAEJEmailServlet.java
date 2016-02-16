@@ -26,9 +26,14 @@ import com.googlecode.objectify.ObjectifyService;
 @SuppressWarnings("serial")
 public class GAEJEmailServlet extends HttpServlet{
 	
+	Properties props = new Properties();
+	Session session = Session.getDefaultInstance(props, null);
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
+		
+		
 		ObjectifyService.register(Subscriber.class);
 		ObjectifyService.register(Greeting.class);
 		
@@ -84,10 +89,6 @@ public class GAEJEmailServlet extends HttpServlet{
 
 				for(Subscriber s: subs)
 				{
-					if(s==null)
-					{
-						System.out.println("subscriber is null!");
-					}
 					System.out.println("subscriber s: " + s.getEmail());
 					//Extract out the To, Subject and Body of the Email to be sent
 					String strTo = s.getEmail();
@@ -100,6 +101,7 @@ public class GAEJEmailServlet extends HttpServlet{
 					//strTo = strTo.trim();
 					//if (strTo.length() == 0) throw new Exception("To field cannot be empty.");
 					mail("myzhan24@gmail.com",strTo,strSubject,body.toString());
+//					mail("myzhan24@gmail.com",strTo,strSubject,strSubject);
 					System.out.println("email sent to "+strTo);
 					System.out.println(strSubject);
 					System.out.println(body.toString());
@@ -127,8 +129,7 @@ public class GAEJEmailServlet extends HttpServlet{
 	public void mail(String from, String to, String subject, String body) throws AddressException, MessagingException
 	{
 		//Call the GAEJ Email Service
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
+		
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress(from));
 		msg.addRecipient(Message.RecipientType.TO,

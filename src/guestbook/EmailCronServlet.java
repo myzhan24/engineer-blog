@@ -26,6 +26,9 @@ import com.googlecode.objectify.ObjectifyService;
 @SuppressWarnings("serial")
 public class EmailCronServlet extends HttpServlet{
 	
+	Properties props = new Properties();
+	Session session = Session.getDefaultInstance(props, null);
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		ObjectifyService.register(Subscriber.class);
@@ -59,7 +62,7 @@ public class EmailCronServlet extends HttpServlet{
 
 				// build the email message
 				String strSubject = "Bonfire Entries Update";
-				
+
 				StringBuilder body = new StringBuilder();
 				try{
 				body.append("Greetings traveler,\n\nThe Bonfire continues to burn. Here is what has been burned since ");
@@ -80,16 +83,17 @@ public class EmailCronServlet extends HttpServlet{
 				for(Subscriber s: subs)
 				{
 
-					System.out.println("subscriber s: " + s.getEmail());
+//					System.out.println("subscriber s: " + s.getEmail());
 					//Extract out the To, Subject and Body of the Email to be sent
 					String strTo = s.getEmail();
 
 
 					
+//					mail("myzhan24@gmail.com",strTo,strSubject,strSubject);
 					mail("myzhan24@gmail.com",strTo,strSubject,body.toString());
-					System.out.println("email sent to "+strTo);
-					System.out.println(strSubject);
-					System.out.println(body.toString());
+//					System.out.println("email sent to "+strTo);
+//					System.out.println(strSubject);
+//					System.out.println(body.toString());
 				}
 
 
@@ -113,8 +117,7 @@ public class EmailCronServlet extends HttpServlet{
 	public void mail(String from, String to, String subject, String body) throws AddressException, MessagingException
 	{
 		//Call the GAEJ Email Service
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
+	
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress(from));
 		msg.addRecipient(Message.RecipientType.TO,
