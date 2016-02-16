@@ -28,7 +28,7 @@ public class UnsubscribeServlet extends HttpServlet{
 		if(user==null)
 		{
 			System.out.println("No user, cannot unsubscribe");
-
+			resp.sendRedirect("/bonfire.jsp");
 		}
 		else
 		{
@@ -47,9 +47,10 @@ public class UnsubscribeServlet extends HttpServlet{
 			System.out.println("Current Sub Count: "+subs.size());
 			for(Subscriber s : subs)
 			{
-				System.out.println(s.toString());
+				System.out.println(s.email+"\t"+s.id);
 			}
+			System.out.println();
 		}
-		resp.sendRedirect("/bonfire.jsp");
+		resp.sendRedirect("/unsubscribe.jsp");
 	}
 }

@@ -15,6 +15,8 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Result;
 
+
+
 public class SubscribeServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 
@@ -29,11 +31,25 @@ public class SubscribeServlet extends HttpServlet{
 		if(user==null)
 		{
 			System.out.println("No user, cannot subscribe");
-
+			resp.sendRedirect("/bonfire.jsp");
 		}
 		else
 		{
+			
 			Subscriber sub = new Subscriber(user);
+			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",sub.email).first().now();
+
+			if(fetch1!=null)
+			{
+				System.out.println("fetch FOUND "+user.getEmail()+":\t"+fetch1.getEmail());
+				resp.sendRedirect("/alreadysubbed.jsp");
+			}
+			else
+			{
+				
+
+			
+			
 			ofy().save().entity(sub).now();  
 
 			System.out.println("Added new sub: "+user.getEmail());
@@ -44,16 +60,17 @@ public class SubscribeServlet extends HttpServlet{
 			System.out.println("Current Sub Count: "+subs.size());
 			for(Subscriber s : subs)
 			{
-				System.out.println(s.toString());
+				System.out.println(s.email+"\t"+s.id);
 			}
+			System.out.println();
 
-//			Result<Subscriber> result = ofy().load().key(Key.create(Subscriber.class, user.getEmail()));
-//			Subscriber s = result.now();
-			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",user.getEmail()).first().now();
+//			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",user.getEmail()).first().now();
 
-			if(fetch1!=null)
-				System.out.println("fetch result for user with email: "+user.getEmail()+":\t"+fetch1.getEmail());
+//			if(fetch1!=null)
+//				System.out.println("fetch result for user with email: "+user.getEmail()+":\t"+fetch1.getEmail());
+			resp.sendRedirect("/subscribe.jsp");
+			}
 		}
-		resp.sendRedirect("/bonfire.jsp");
+		
 	}
 }

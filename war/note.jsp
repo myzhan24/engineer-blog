@@ -19,23 +19,14 @@
   <body>
   
     
-<%
-	ObjectifyService.register(Greeting.class);
-	
-    String guestbookName = request.getParameter("guestbookName");
-    
-    if (guestbookName == null) {
-        guestbookName = "default";
-    }
-    
-    pageContext.setAttribute("guestbookName", guestbookName);
-    
+<%    
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
+
 <top><p>Greetings, ${fn:escapeXml(user.nickname)}
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 
@@ -60,7 +51,6 @@
     	Message:
     	<div><textarea name="content" rows="3" cols="60"></textarea></div>
     	<div><input type="submit" value="Toss" /></div>
-    	<input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
     </form>
 
 
