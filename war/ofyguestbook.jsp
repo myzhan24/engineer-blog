@@ -26,7 +26,7 @@
   
   
 <%
-	ObjectifyService.register(Greeting.class);
+	
 	
     String guestbookName = request.getParameter("guestbookName");
     

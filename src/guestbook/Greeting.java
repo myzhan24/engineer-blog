@@ -5,7 +5,7 @@ import java.util.Date;
  
 
 import com.google.appengine.api.users.User;
-
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 
 import com.googlecode.objectify.annotation.Id;
@@ -17,11 +17,18 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 
 public class Greeting implements Comparable<Greeting> {
+	static {
+		ObjectifyService.register(Greeting.class);
+	}
+	
+	
     @Id Long id;
     User user;
     String content;
     String title;
     Date date;
+    
+    
     
     private Greeting() {}
     

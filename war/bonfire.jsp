@@ -95,6 +95,14 @@ to post</p></top>
     }
 %>
 <a href="allposts.jsp">Look closer into the flames</a>
+
+<form action="/subscribe" method="post"> 
+    	<div><input type="submit" value="Subscribe" /></div>
+</form>
+
+<form action="/unsubscribe" method="post"> 
+    	<div><input type="submit" value="Unsubscribe" /></div>
+</form>
     
     </blog>
  

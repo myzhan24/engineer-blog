@@ -14,6 +14,27 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/guestbook</url-pattern>
 	</servlet-mapping>
 	
+	
+	<servlet>
+        <servlet-name>SubscribeUser</servlet-name>
+        <servlet-class>guestbook.SubscribeServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SubscribeUser</servlet-name>
+        <url-pattern>/subscribe</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UnsubscribeUser</servlet-name>
+        <servlet-class>guestbook.UnsubscribeServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>UnsubscribeUser</servlet-name>
+        <url-pattern>/unsubscribe</url-pattern>
+    </servlet-mapping>
+	
 	<servlet>
         <servlet-name>AllPosts</servlet-name>
         <servlet-class>guestbook.OfySignGuestbookServlet</servlet-class>
@@ -22,6 +43,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-mapping>
         <servlet-name>AllPosts</servlet-name>
         <url-pattern>/allposts</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GAEJEmailServlet</servlet-name>
+        <servlet-class>guestbook.GAEJEmailServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>GAEJEmailServlet</servlet-name>
+        <url-pattern>/gaejemail</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>EmailCronServlet</servlet-name>
+        <servlet-class>guestbook.EmailCronServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>EmailCronServlet</servlet-name>
+        <url-pattern>/cron/emailcronjob</url-pattern>
     </servlet-mapping>
     
     <servlet>
