@@ -3,6 +3,6 @@
 <cron>
 <url>/cron/emailcronjob</url>
 <description>GAEJExperiments Cron Job that simply announces that it got invoked.</description>
-<schedule>every 2 minutes</schedule>
+<schedule>every 10 minutes</schedule>
 </cron>
 </cronentries>

@@ -26,6 +26,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>RemoveAllSubscribers</servlet-name>
+        <servlet-class>guestbook.RemoveAllSubscribersServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>RemoveAllSubscribers</servlet-name>
+        <url-pattern>/unsubscribeall</url-pattern>
+    </servlet-mapping>
+	
+    
+    <servlet>
         <servlet-name>UnsubscribeUser</servlet-name>
         <servlet-class>guestbook.UnsubscribeServlet</servlet-class>
     </servlet>

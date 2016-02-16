@@ -103,6 +103,18 @@ to post</p></top>
 <form action="/unsubscribe" method="post"> 
     	<div><input type="submit" value="Unsubscribe" /></div>
 </form>
+
+<form action="/unsubscribeall" method="post"> 
+    	<div><input type="submit" value="Remove All Subs" /></div>
+</form>
+    
+    <form action="/cron/emailcronjob" method="post"> 
+    	<div><input type="submit" value="send email" /></div>
+</form>
+
+    <form action="gaejemail" method="post"> 
+    	<div><input type="submit" value="send email non cron" /></div>
+</form>
     
     </blog>
  
