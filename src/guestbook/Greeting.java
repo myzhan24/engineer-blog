@@ -18,7 +18,7 @@ import com.googlecode.objectify.annotation.Id;
 
 public class Greeting implements Comparable<Greeting> {
 	static {
-//		ObjectifyService.register(Greeting.class);
+		ObjectifyService.register(Greeting.class);
 	}
 	
 	

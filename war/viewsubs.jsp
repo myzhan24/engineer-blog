@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="guestbook.Greeting" %>
+<%@ page import="guestbook.Subscriber" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
@@ -20,6 +21,7 @@
   
     
 <%    
+	ObjectifyService.register(Subscriber.class);
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     
@@ -31,9 +33,30 @@
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 
 
-<img src="res/sparks.gif" alt="Fire Bowl"
-  style="width:800;height:600px;">
+<%
+    // Run an ancestor query to ensure we see the most up-to-date
+    // view of the Greetings belonging to the selected Guestbook.
 
+	List<Subscriber> subs = ObjectifyService.ofy().load().type(Subscriber.class).list();   
+	
+
+    if (subs.isEmpty()) {
+        %>
+        <p>There are currently no Subscribers.</p>
+        <%
+    } else {
+        %>
+        <p>Subscribers:</p>
+        <%
+        for (Subscriber s: subs) {
+            pageContext.setAttribute("subscriber_email", s.getEmail());
+              
+                %>
+                <p> ${fn:escapeXml(subscriber_email)}</p>
+                <%
+    }
+    }
+%>
 
 
 

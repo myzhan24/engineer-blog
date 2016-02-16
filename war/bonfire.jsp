@@ -122,6 +122,8 @@ to post</p></top>
     	<div><input type="submit" value="Delete All Posts" /></div>
 </form>
     
+<a href="viewsubs.jsp">View Subs</a>
+
     </blog>
  
   </body>
