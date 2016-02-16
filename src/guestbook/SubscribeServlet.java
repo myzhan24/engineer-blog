@@ -37,7 +37,7 @@ public class SubscribeServlet extends HttpServlet{
 		{
 			
 			Subscriber sub = new Subscriber(user);
-			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",sub.email).first().now();
+			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",sub.email).first().get();
 
 			if(fetch1!=null)
 			{

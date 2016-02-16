@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="guestbook.Greeting" %>
+<%@ page import="guestbook.Subscriber" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
@@ -23,6 +24,7 @@
 	<hr>  
     
 <%
+	ObjectifyService.register(Subscriber.class);
 	ObjectifyService.register(Greeting.class);
     
     UserService userService = UserServiceFactory.getUserService();
@@ -112,8 +114,12 @@ to post</p></top>
     	<div><input type="submit" value="send email" /></div>
 </form>
 
-    <form action="gaejemail" method="post"> 
+<form action="/gaejemail" method="post"> 
     	<div><input type="submit" value="send email non cron" /></div>
+</form>
+
+<form action="/deleteposts" method="post"> 
+    	<div><input type="submit" value="Delete All Posts" /></div>
 </form>
     
     </blog>

@@ -26,8 +26,9 @@ public class OfySignGuestbookServlet extends HttpServlet {
         User user = userService.getCurrentUser();
 
 //        String guestbookName = req.getParameter("guestbookName");
-        String content = req.getParameter("content");
-        String title = req.getParameter("title");
+        String content = req.getParameter("content").trim();
+        String title = req.getParameter("title").trim();
+      
         
         System.out.println(user.toString() + "\t" + content.toString() + "\t" + title.toString());
         if(user.toString().isEmpty() || content.isEmpty() || title.isEmpty())

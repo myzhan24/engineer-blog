@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -20,61 +21,75 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.googlecode.objectify.ObjectifyService;
+
 @SuppressWarnings("serial")
 public class EmailCronServlet extends HttpServlet{
 	
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {/*
-
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		ObjectifyService.register(Subscriber.class);
+		ObjectifyService.register(Greeting.class);
+		
 		String strCallResult = "";
-		resp.setContentType("text/plain");
+
+		
+		
+		
 		try {
 			// email list
 			List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
-			
-			
-			// msg list
 			List<Greeting> msgs = ofy().load().type(Greeting.class).list();
 			
+												
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.HOUR_OF_DAY, -24);
 			Date dayAgo = calendar.getTime();
 			
 			keepAfter(msgs,dayAgo);
+			Collections.sort(msgs);
+			
 			
 			if(subs.isEmpty() || msgs.isEmpty())
 			{
 				strCallResult = "no subs or no msgs: " + "no emails sent.";
-				resp.getWriter().println(strCallResult);
 			}
 			else
 			{
+
 				// build the email message
 				String strSubject = "Bonfire Entries Update";
 				
 				StringBuilder body = new StringBuilder();
+				try{
 				body.append("Greetings traveler,\n\nThe Bonfire continues to burn. Here is what has been burned since ");
-				body.append(dayAgo.toString());
+				body.append(dayAgo.toString()+".");
 				body.append("\n\n");
+				} catch(Exception e) {
+					System.out.println(e);
+				}
 				
-				for(Greeting g: msgs)
+				for(Greeting g : msgs)
 				{
-					body.append("\t"+g.title+"\n\t\t"+g.content+"\n\t\t"+g.user.getNickname()+"\n\t\t"+g.date.toString()+"\n\n");					
+					body.append("\t"+g.title);
+					body.append("\n\t\t"+g.content);
+					body.append("\n\t\t"+g.user.toString());
+					body.append("\n\t\t"+g.date.toString()+"\n\n");
 				}
 
 				for(Subscriber s: subs)
 				{
+
+					System.out.println("subscriber s: " + s.getEmail());
 					//Extract out the To, Subject and Body of the Email to be sent
 					String strTo = s.getEmail();
 
-					//Do validations here. Only basic ones i.e. cannot be null/empty
-					//Currently only checking the To Email field
-					//if (strTo == null) throw new Exception("To field cannot be empty.");
 
-					//Trim the stuff
-					//strTo = strTo.trim();
-					//if (strTo.length() == 0) throw new Exception("To field cannot be empty.");
+					
 					mail("myzhan24@gmail.com",strTo,strSubject,body.toString());
+					System.out.println("email sent to "+strTo);
+					System.out.println(strSubject);
+					System.out.println(body.toString());
 				}
 
 
@@ -82,21 +97,18 @@ public class EmailCronServlet extends HttpServlet{
 
 
 				strCallResult = "Success: " + "Email has been delivered.";
-				//resp.getWriter().println(strCallResult);
+
 			}
 		}
 		catch (Exception ex) {
 			strCallResult = "Fail: " + ex.getMessage();
-			//resp.getWriter().println(strCallResult);
+
+			ex.printStackTrace();
+
 		}
-		*/
 	}
 
-//	@Override
-//	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-//			throws ServletException, IOException {
-//		doGet(req, resp);
-//	}
+
 
 	public void mail(String from, String to, String subject, String body) throws AddressException, MessagingException
 	{
@@ -124,4 +136,11 @@ public class EmailCronServlet extends HttpServlet{
 			}
 		}
 	}
+
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doGet(req, resp);
+	}
+	
 }

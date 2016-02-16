@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -20,50 +21,74 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.googlecode.objectify.ObjectifyService;
+
 @SuppressWarnings("serial")
 public class GAEJEmailServlet extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
+		ObjectifyService.register(Subscriber.class);
+		ObjectifyService.register(Greeting.class);
+		
 		String strCallResult = "";
-		resp.setContentType("text/plain");
+
+		
 		try {
 			// email list
 			List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
-			
-			
-			// msg list
 			List<Greeting> msgs = ofy().load().type(Greeting.class).list();
 			
+			System.out.println("num subs: "+subs.size());
+			
+			// msg list
+
+			System.out.println("num msgs: "+ msgs.size());
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.HOUR_OF_DAY, -24);
 			Date dayAgo = calendar.getTime();
 			
 			keepAfter(msgs,dayAgo);
+			Collections.sort(msgs);
 			
+			System.out.println("num msgs: "+ msgs.size()+" after "+dayAgo);
 			if(subs.isEmpty() || msgs.isEmpty())
 			{
 				strCallResult = "no subs or no msgs: " + "no emails sent.";
-				resp.getWriter().println(strCallResult);
+				System.out.println(strCallResult);
+				resp.sendRedirect("/bonfire.jsp");
 			}
 			else
 			{
+
 				// build the email message
 				String strSubject = "Bonfire Entries Update";
 				
 				StringBuilder body = new StringBuilder();
+				try{
 				body.append("Greetings traveler,\n\nThe Bonfire continues to burn. Here is what has been burned since ");
-				body.append(dayAgo.toString());
+				body.append(dayAgo.toString()+".");
 				body.append("\n\n");
+				} catch(Exception e) {
+					System.out.println(e);
+				}
 				
-				for(Greeting g: msgs)
+				for(Greeting g : msgs)
 				{
-					body.append("\t"+g.title+"\n\t\t"+g.content+"\n\t\t"+g.user.getNickname()+"\n\t\t"+g.date.toString()+"\n\n");					
+					body.append("\t"+g.title);
+					body.append("\n\t\t"+g.content);
+					body.append("\n\t\t"+g.user.toString());
+					body.append("\n\t\t"+g.date.toString()+"\n\n");
 				}
 
 				for(Subscriber s: subs)
 				{
+					if(s==null)
+					{
+						System.out.println("subscriber is null!");
+					}
+					System.out.println("subscriber s: " + s.getEmail());
 					//Extract out the To, Subject and Body of the Email to be sent
 					String strTo = s.getEmail();
 
@@ -75,6 +100,9 @@ public class GAEJEmailServlet extends HttpServlet{
 					//strTo = strTo.trim();
 					//if (strTo.length() == 0) throw new Exception("To field cannot be empty.");
 					mail("myzhan24@gmail.com",strTo,strSubject,body.toString());
+					System.out.println("email sent to "+strTo);
+					System.out.println(strSubject);
+					System.out.println(body.toString());
 				}
 
 
@@ -83,19 +111,18 @@ public class GAEJEmailServlet extends HttpServlet{
 
 				strCallResult = "Success: " + "Email has been delivered.";
 				//resp.getWriter().println(strCallResult);
+				System.out.println(strCallResult);
+				resp.sendRedirect("/bonfire.jsp");
 			}
 		}
 		catch (Exception ex) {
 			strCallResult = "Fail: " + ex.getMessage();
 			//resp.getWriter().println(strCallResult);
+			ex.printStackTrace();
+			resp.sendRedirect("/bonfire.jsp");
 		}
 	}
 
-//	@Override
-//	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-//			throws ServletException, IOException {
-//		doGet(req, resp);
-//	}
 
 	public void mail(String from, String to, String subject, String body) throws AddressException, MessagingException
 	{

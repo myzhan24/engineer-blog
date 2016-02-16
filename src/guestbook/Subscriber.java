@@ -11,7 +11,7 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class Subscriber {
 	static {
-		ObjectifyService.register(Subscriber.class);
+//		ObjectifyService.register(Subscriber.class);
 	}
 	
 	

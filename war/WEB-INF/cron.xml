@@ -2,7 +2,7 @@
 <cronentries>
 <cron>
 <url>/cron/emailcronjob</url>
-<description>GAEJExperiments Cron Job that simply announces that it got invoked.</description>
-<schedule>every 10 minutes</schedule>
+<description>Subscriber update emails. Sent Everyday 5PM CST</description>
+<schedule>every 2 minutes</schedule>
 </cron>
 </cronentries>
