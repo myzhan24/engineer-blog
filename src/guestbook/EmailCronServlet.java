@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -46,6 +47,8 @@ public class EmailCronServlet extends HttpServlet{
 			
 												
 			Calendar calendar = Calendar.getInstance();
+			TimeZone tz = TimeZone.getTimeZone("CST");
+			calendar.setTimeZone(tz);
 			calendar.add(Calendar.HOUR_OF_DAY, -24);
 			Date dayAgo = calendar.getTime();
 			
