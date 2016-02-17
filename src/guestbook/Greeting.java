@@ -1,8 +1,8 @@
 package guestbook;
 
+import java.util.Calendar;
 import java.util.Date;
-
- 
+import java.util.TimeZone;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.ObjectifyService;
@@ -36,7 +36,12 @@ public class Greeting implements Comparable<Greeting> {
         this.user = user;
         this.title = title;
         this.content = content;
-        date = new Date();
+        
+        Calendar calendar = Calendar.getInstance();
+		TimeZone tz = TimeZone.getTimeZone("CST");
+		calendar.setTimeZone(tz);
+
+		date = calendar.getTime();
     }
     
     public User getUser() {
