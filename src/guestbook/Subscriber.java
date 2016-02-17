@@ -26,6 +26,7 @@ public class Subscriber {
     public Subscriber(User user) {
         this.user = user;
         this.email = user.getEmail();
+        
     }
     
     public String getEmail() {

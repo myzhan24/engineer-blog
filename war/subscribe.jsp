@@ -34,7 +34,7 @@
 <img src="res/sparks.gif" alt="Fire Bowl"
   style="width:800;height:600px;">
 
-<p>${fn:escapeXml(user.nickname)} is now subscribed! New cinders will be emailed to you every 5PM CST.</p>
+<p>${fn:escapeXml(user.email)} is now subscribed! New cinders will be emailed to you every 5PM CST.</p>
 	<a href="bonfire.jsp">Return</a>
 
 

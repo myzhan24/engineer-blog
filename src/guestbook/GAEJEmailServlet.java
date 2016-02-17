@@ -30,15 +30,12 @@ public class GAEJEmailServlet extends HttpServlet{
 	Session session = Session.getDefaultInstance(props, null);
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
-
-		
-		
+			throws IOException {		
 		ObjectifyService.register(Subscriber.class);
 		ObjectifyService.register(Greeting.class);
 		
 		String strCallResult = "";
-
+		
 		
 		try {
 			// email list
@@ -49,7 +46,7 @@ public class GAEJEmailServlet extends HttpServlet{
 			
 			// msg list
 
-			System.out.println("num msgs: "+ msgs.size());
+//			System.out.println("num msgs: "+ msgs.size());
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.HOUR_OF_DAY, -24);
 			Date dayAgo = calendar.getTime();
@@ -60,9 +57,8 @@ public class GAEJEmailServlet extends HttpServlet{
 			System.out.println("num msgs: "+ msgs.size()+" after "+dayAgo);
 			if(subs.isEmpty() || msgs.isEmpty())
 			{
-				strCallResult = "no subs or no msgs: " + "no emails sent.";
-				System.out.println(strCallResult);
-				resp.sendRedirect("/bonfire.jsp");
+				strCallResult = "ERROR: no email sent sub count is: "+subs.size()+"\tmsg count is: "+msgs.size();
+				
 			}
 			else
 			{
@@ -92,7 +88,9 @@ public class GAEJEmailServlet extends HttpServlet{
 					System.out.println("subscriber s: " + s.getEmail());
 					//Extract out the To, Subject and Body of the Email to be sent
 					String strTo = s.getEmail();
-
+					
+					strTo = "chokeslol@gmail.com";
+					
 					//Do validations here. Only basic ones i.e. cannot be null/empty
 					//Currently only checking the To Email field
 					//if (strTo == null) throw new Exception("To field cannot be empty.");
@@ -101,10 +99,10 @@ public class GAEJEmailServlet extends HttpServlet{
 					//strTo = strTo.trim();
 					//if (strTo.length() == 0) throw new Exception("To field cannot be empty.");
 					mail("myzhan24@gmail.com",strTo,strSubject,body.toString());
-//					mail("myzhan24@gmail.com",strTo,strSubject,strSubject);
+
 					System.out.println("email sent to "+strTo);
-					System.out.println(strSubject);
-					System.out.println(body.toString());
+					//System.out.println(strSubject);
+					//System.out.println(body.toString());
 				}
 
 
@@ -112,15 +110,17 @@ public class GAEJEmailServlet extends HttpServlet{
 
 
 				strCallResult = "Success: " + "Email has been delivered.";
-				//resp.getWriter().println(strCallResult);
-				System.out.println(strCallResult);
-				resp.sendRedirect("/bonfire.jsp");
+
+				
+				
 			}
+			System.out.println(strCallResult);
+			resp.sendRedirect("/bonfire.jsp");
 		}
 		catch (Exception ex) {
-			strCallResult = "Fail: " + ex.getMessage();
-			//resp.getWriter().println(strCallResult);
 			ex.printStackTrace();
+			strCallResult = "ERROR: email failed to send";
+			System.out.println(strCallResult);
 			resp.sendRedirect("/bonfire.jsp");
 		}
 	}
