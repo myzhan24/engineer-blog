@@ -22,6 +22,11 @@ date{
 signature{
 	font-size: 77%;
 }
+subs{
+	font-size: 200%;
+	font-weight: bold;
+
+}
 lightGrey{
 	color: #7d7d7d; 
 }

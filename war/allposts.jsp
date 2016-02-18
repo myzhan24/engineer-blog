@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="guestbook.Greeting" %>
+<%@ page import="guestbook.Subscriber" %>
+<%@ page import="guestbook.OfyService" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
@@ -12,25 +14,16 @@
 <html>
   <head>
    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-   
+   <title>Bonfire</title>
   </head>
   
   
   
-  <body>
-  	<h1>All Blog Posts</h1>
+  	<body>
  
-  
 <%
-	ObjectifyService.register(Greeting.class);
 	
-    String guestbookName = request.getParameter("guestbookName");
-    
-    if (guestbookName == null) {
-        guestbookName = "default";
-    }
-    
-    pageContext.setAttribute("guestbookName", guestbookName);
+	
     
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
@@ -38,54 +31,71 @@
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+<top><p>Greetings, ${fn:escapeXml(user.nickname)}
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 <%
     } else {
 %>
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
+<top><p>Greetings traveler.
+<a href="<%= userService.createLoginURL(request.getRequestURI()) %>"> Sign In</a>
+to post</p></top>
 <%
     }
     %>
+  
+  
+  <img src="res/yule.gif" alt="Logs"
+  style="width:800;height:600px;">
+	
+	<p><i>Peering into the ash and cinders, more messages became clear.</i></p>
+    <a href="note.jsp">Toss a note in</a> | 
+    <a href="bonfire.jsp">Return</a>
+    <br>
+    <hr>
+      
+    <blog>
+    
+    
+ 
+
+
 <%
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
-
-	List<Greeting> greetings = ObjectifyService.ofy().load().type(Greeting.class).list();   
+	Objectify objectify = OfyService.ofy();
+	List<Greeting> greetings = objectify.load().type(Greeting.class).list();   
 	Collections.sort(greetings); 
 
     if (greetings.isEmpty()) {
         %>
-        <p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p>
+        <h2>The Cinders show no messages</h2>
         <%
     } else {
         %>
-        <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
+        <h2>Messages in The Cinders</h2> 
+        <br>
         <%
         for (Greeting greeting : greetings) {
             pageContext.setAttribute("greeting_content", greeting.getContent());
             pageContext.setAttribute("greeting_user", greeting.getUser());
-            pageContext.setAttribute("greeting_date", greeting.getDate());
+            pageContext.setAttribute("greeting_date", greeting.getDateCST());
+            pageContext.setAttribute("greeting_title", greeting.getTitle());
             
-                %>
-                <p> ${fn:escapeXml(greeting_date)} <b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
-                <%
+           %>
+			<blogTitle><p>${fn:escapeXml(greeting_title)}</p></blogTitle>
+			<blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote>
+            <blockquote><b><signature>- ${fn:escapeXml(greeting_user.nickname)}</signature></b> <br><date>circa ${fn:escapeXml(greeting_date)}</date></br></blockquote>
             
-            %>
-            <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+            <br>
             <%
+
         }
     }
 %>
- 
-    <form action="/ofysign" method="post"> 
-    	<div><textarea name="title" rows = "1" cols="60"></textarea></div>
-    	<div><textarea name="content" rows="3" cols="60"></textarea></div>
-    	<div><input type="submit" value="New Post" /></div>
-    	<input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
+
+
+
+    </blog>
  
   </body>
 </html>

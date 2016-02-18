@@ -13,7 +13,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.Key;
-
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 import com.googlecode.objectify.cmd.QueryKeys;
@@ -23,14 +23,14 @@ public class RemoveAllSubscribersServlet extends HttpServlet{
 
 			throws IOException {
 
-		ObjectifyService.register(Subscriber.class);
-		Iterable<Key<Subscriber>> keys = ofy().load().type(Subscriber.class).keys();
+		Objectify objectify = OfyService.ofy();
+		Iterable<Key<Subscriber>> keys = objectify.load().type(Subscriber.class).keys();
 
-		ofy().delete().keys(keys);
+		objectify.delete().keys(keys);
 
 
 
-		List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
+		List<Subscriber> subs = objectify.load().type(Subscriber.class).list();
 
 		System.out.println("Current Sub Count: "+subs.size());
 		for(Subscriber s : subs)
@@ -39,6 +39,6 @@ public class RemoveAllSubscribersServlet extends HttpServlet{
 		}
 		System.out.println();
 
-		resp.sendRedirect("/bonfire.jsp");
+		resp.sendRedirect("/admin.jsp");
 	}
 }

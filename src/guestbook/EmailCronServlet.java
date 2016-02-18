@@ -1,8 +1,7 @@
 package guestbook;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -17,12 +16,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Objectify;
 
 @SuppressWarnings("serial")
 public class EmailCronServlet extends HttpServlet{
@@ -38,16 +36,16 @@ public class EmailCronServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {		
-		ObjectifyService.register(Subscriber.class);
-		ObjectifyService.register(Greeting.class);
-		
+
 		String strCallResult = "";
 		
 		
 		try {
+			Objectify objectify = OfyService.ofy();
+			
 			// email list
-			List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
-			List<Greeting> msgs = ofy().load().type(Greeting.class).list();
+			List<Subscriber> subs = objectify.load().type(Subscriber.class).list();
+			List<Greeting> msgs = objectify.load().type(Greeting.class).list();
 			
 			System.out.println("num subs: "+subs.size());
 			
@@ -59,6 +57,10 @@ public class EmailCronServlet extends HttpServlet{
 			calendar.setTimeZone(tz);
 			calendar.add(Calendar.HOUR_OF_DAY, -24);
 			Date dayAgo = calendar.getTime();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a");
+	    	sdf.setTimeZone(tz);
+	    	
 			
 			keepAfter(msgs,dayAgo);
 			Collections.sort(msgs);
@@ -77,8 +79,8 @@ public class EmailCronServlet extends HttpServlet{
 				
 				StringBuilder body = new StringBuilder();
 				try{
-				body.append("Greetings traveler,\n\nThe Bonfire continues to burn. Here is what has been burned since ");
-				body.append(dayAgo.toString()+".");
+				body.append("Greetings traveler,\n\nThe Bonfire is burning strong. Here's what has been burned since ");
+				body.append(sdf.format(dayAgo)+".");
 				body.append("\n\n");
 				} catch(Exception e) {
 					System.out.println(e);
@@ -89,8 +91,11 @@ public class EmailCronServlet extends HttpServlet{
 					body.append("\t"+g.title);
 					body.append("\n\t\t"+g.content);
 					body.append("\n\t\t"+g.user.toString());
-					body.append("\n\t\t"+g.date.toString()+"\n\n");
+					body.append("\n\t\t"+g.getDateCST()+"\n\n");
 				}
+				body.append("\n\nI am a bot set to email all subscribers of the Bonfire Blog every 5PM CST. If you would like to stop receiving these messages, unsubscribe at https://1-dot-civic-shell-120323.appspot.com/bonfire.jsp");
+				body.append("\n\nUntil next light,");
+				body.append("\nMysterious Traveler");
 
 				for(Subscriber s: subs)
 				{
@@ -122,13 +127,13 @@ public class EmailCronServlet extends HttpServlet{
 				
 			}
 			System.out.println(strCallResult);
-			//resp.sendRedirect("/bonfire.jsp");
+//			resp.sendRedirect("/admin.jsp");
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			strCallResult = "ERROR: email failed to send";
 			System.out.println(strCallResult);
-			//resp.sendRedirect("/bonfire.jsp");
+//			resp.sendRedirect("/admin.jsp");
 		}
 	}
 

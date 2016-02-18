@@ -13,7 +13,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.Key;
-
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 import com.googlecode.objectify.cmd.QueryKeys;
@@ -23,15 +23,12 @@ public class DeletePostsServlet extends HttpServlet{
 
 			throws IOException {
 
-		ObjectifyService.register(Greeting.class);
-		Iterable<Key<Greeting>> keys = ofy().load().type(Greeting.class).keys();
+		Objectify objectify = OfyService.ofy();
+		Iterable<Key<Greeting>> keys = objectify.load().type(Greeting.class).keys();
 
-		ofy().delete().keys(keys);
+		objectify.delete().keys(keys);
+		
 
-
-
-		List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
-
-		resp.sendRedirect("/bonfire.jsp");
+		resp.sendRedirect("/admin.jsp");
 	}
 }

@@ -17,7 +17,6 @@
   
   
   <body>
-  
     
 <%    
     UserService userService = UserServiceFactory.getUserService();
@@ -46,11 +45,9 @@
  
 	<br>
     <form action="/bonfire" method="post"> 
-    	Title:
-    	<div><textarea name="title" rows = "1" cols="60"></textarea></div>
-    	Message:
-    	<div><textarea name="content" rows="3" cols="60"></textarea></div>
-    	<div><input type="submit" value="Toss" /></div>
+    	Title: <div><textarea name="title" rows = "1" cols="60"></textarea></div>
+    	Message: <div><textarea name="content" rows="3" cols="60"></textarea></div>
+    	<div><input type="submit" value="Burn" /></div>
     </form>
 
 

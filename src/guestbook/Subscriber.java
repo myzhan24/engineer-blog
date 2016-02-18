@@ -9,12 +9,7 @@ import com.googlecode.objectify.annotation.Index;
 
 
 @Entity
-public class Subscriber {
-	static {
-		ObjectifyService.register(Subscriber.class);
-	}
-	
-	
+public class Subscriber {	
     @Id Long id;
     @Index String email;
     User user;

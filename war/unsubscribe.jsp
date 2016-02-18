@@ -31,7 +31,7 @@
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
 
 
-<img src="res/sparks.gif" alt="Fire Bowl"
+<img src="res/george.gif" alt="Fire Bowl"
   style="width:800;height:600px;">
 
 <p>${fn:escapeXml(user.nickname)} is now unsubscribed.</p>

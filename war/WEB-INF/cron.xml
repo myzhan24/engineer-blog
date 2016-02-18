@@ -3,6 +3,7 @@
 <cron>
 <url>/cron/emailcronjob</url>
 <description>Subscriber update emails. Sent Everyday 5PM CST</description>
-<schedule>every 30 minutes</schedule>
+<schedule>every day 17:00</schedule>
+<timezone>America/Chicago</timezone>
 </cron>
 </cronentries>

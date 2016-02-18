@@ -13,6 +13,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Result;
 
 
@@ -24,7 +25,6 @@ public class SubscribeServlet extends HttpServlet{
 
 
 		UserService userService = UserServiceFactory.getUserService();
-
 		User user = userService.getCurrentUser();
 
 
@@ -37,7 +37,8 @@ public class SubscribeServlet extends HttpServlet{
 		{
 			
 			Subscriber sub = new Subscriber(user);
-			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",sub.email).first().get();
+			Objectify objectify = OfyService.ofy();
+			Subscriber fetch1 = objectify.load().type(Subscriber.class).filter("email",sub.email).first().get();
 
 			if(fetch1!=null)
 			{
@@ -50,12 +51,12 @@ public class SubscribeServlet extends HttpServlet{
 
 			
 			
-			ofy().save().entity(sub).now();  
+			objectify.save().entity(sub).now();  
 
 			System.out.println("Added new sub: "+user.getEmail());
 
 
-			List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
+			List<Subscriber> subs = objectify.load().type(Subscriber.class).list();
 
 			System.out.println("Current Sub Count: "+subs.size());
 			for(Subscriber s : subs)
@@ -64,10 +65,7 @@ public class SubscribeServlet extends HttpServlet{
 			}
 			System.out.println();
 
-//			Subscriber fetch1 = ofy().load().type(Subscriber.class).filter("email",user.getEmail()).first().now();
 
-//			if(fetch1!=null)
-//				System.out.println("fetch result for user with email: "+user.getEmail()+":\t"+fetch1.getEmail());
 			resp.sendRedirect("/subscribe.jsp");
 			}
 		}

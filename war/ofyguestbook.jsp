@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="guestbook.Greeting" %>
+<%@ page import="guestbook.OfyService" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
@@ -56,8 +57,8 @@ to include your name with greetings you post.</p>
 <%
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
-
-	List<Greeting> greetings = ObjectifyService.ofy().load().type(Greeting.class).list();   
+	Objectify objectify = OfyService.ofy();
+	List<Greeting> greetings = objectify.load().type(Greeting.class).list();   
 	Collections.sort(greetings); 
 
     if (greetings.isEmpty()) {

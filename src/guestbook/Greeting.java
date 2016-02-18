@@ -1,5 +1,6 @@
 package guestbook;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -17,11 +18,6 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 
 public class Greeting implements Comparable<Greeting> {
-	static {
-		ObjectifyService.register(Greeting.class);
-	}
-	
-	
     @Id Long id;
     User user;
     String content;
@@ -58,6 +54,12 @@ public class Greeting implements Comparable<Greeting> {
     
     public String getDate() {
     	return date.toString();
+    }
+    
+    public String getDateCST(){
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a");
+    	sdf.setTimeZone(TimeZone.getTimeZone("CST"));
+    	return sdf.format(date);
     }
 
     @Override

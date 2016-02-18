@@ -13,9 +13,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.Key;
-
-import com.googlecode.objectify.cmd.Query;
-import com.googlecode.objectify.cmd.QueryKeys;
+import com.googlecode.objectify.Objectify;
 
 public class UnsubscribeServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,17 +30,17 @@ public class UnsubscribeServlet extends HttpServlet{
 		}
 		else
 		{
-			Subscriber sub = new Subscriber(user);
 			
-			Iterable<Key<Subscriber>> keys = ofy().load().type(Subscriber.class).filter("email", user.getEmail()).keys();
+			Objectify objectify = OfyService.ofy();
+			Iterable<Key<Subscriber>> keys = objectify.load().type(Subscriber.class).filter("email", user.getEmail()).keys();
 			
 			System.out.println("key matches for "+user.getEmail()+":\t"+keys.toString());
 			
-			ofy().delete().keys(keys);
+			objectify.delete().keys(keys);
 			
 			
 
-			List<Subscriber> subs = ofy().load().type(Subscriber.class).list();
+			List<Subscriber> subs = objectify.load().type(Subscriber.class).list();
 
 			System.out.println("Current Sub Count: "+subs.size());
 			for(Subscriber s : subs)
