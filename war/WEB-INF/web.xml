@@ -26,6 +26,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	<servlet>
+        <servlet-name>DeletePost</servlet-name>
+        <servlet-class>guestbook.DeletePostServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>DeletePost</servlet-name>
+        <url-pattern>/deletepost</url-pattern>
+    </servlet-mapping>
+	
+	
+	<servlet>
         <servlet-name>SubscribeUser</servlet-name>
         <servlet-class>guestbook.SubscribeServlet</servlet-class>
     </servlet>

@@ -10,6 +10,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
  
 
@@ -20,8 +21,10 @@ import com.googlecode.objectify.annotation.Id;
 public class Greeting implements Comparable<Greeting> {
     @Id Long id;
     User user;
+    @Index String email;
     String content;
     String title;
+    @Index String cstDate;
     Date date;
     
     
@@ -32,12 +35,15 @@ public class Greeting implements Comparable<Greeting> {
         this.user = user;
         this.title = title;
         this.content = content;
+        this.email = user.getEmail();
         
         Calendar calendar = Calendar.getInstance();
 		TimeZone tz = TimeZone.getTimeZone("CST");
 		calendar.setTimeZone(tz);
 
 		date = calendar.getTime();
+		
+		cstDate = getDateCST();
     }
     
     public User getUser() {

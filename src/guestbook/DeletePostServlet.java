@@ -18,7 +18,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 import com.googlecode.objectify.cmd.QueryKeys;
 
-public class DeletePostsServlet extends HttpServlet{
+public class DeletePostServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 
 			throws IOException {
@@ -33,12 +33,18 @@ public class DeletePostsServlet extends HttpServlet{
 		}
 		else
 		{
+			
+			String cstdate = req.getParameter("cstdate").trim();
+		    String email = req.getParameter("email").trim();
+		    
+		    System.out.println("email: " + email + "\tdate: "+cstdate);
 			Objectify objectify = OfyService.ofy();
-			Iterable<Key<Greeting>> keys = objectify.load().type(Greeting.class).filter("email", user.getEmail()).keys();
+			Iterable<Key<Greeting>> keys = objectify.load().type(Greeting.class).filter("email", user.getEmail()).filter("cstDate",cstdate).keys();
+			
 //			Iterable<Key<Greeting>> keys = objectify.load().type(Greeting.class).keys();
 			objectify.delete().keys(keys);
 		}
 
-		resp.sendRedirect("/admin.jsp");
+		resp.sendRedirect("/myposts.jsp");
 	}
 }

@@ -61,6 +61,7 @@ to post</p></top>
     
 
 <p><a href="viewsubs.jsp" float="left">View Subscribers</a></p> 
+<p><a href="myposts.jsp" float="left">View My Posts</a></p> 
 
 
 <form action="/unsubscribeall" method="post"> 
@@ -69,8 +70,11 @@ to post</p></top>
    
 
 <form action="/deleteposts" method="post"> 
-    	<div><input type="submit" value="Delete All Posts" /></div>
+    	<div><input type="submit" value="Delete All My Posts" /></div>
 </form>
+
+
+
     
     
 
