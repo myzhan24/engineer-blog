@@ -72,7 +72,7 @@ to post</p></top>
         <%
     } else {
         %>
-        <h2>Messages in The Cinders</h2> 
+        <h2>All Messages in The Cinders</h2> 
         <br>
         <%
         for (Greeting greeting : greetings) {

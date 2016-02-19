@@ -44,10 +44,10 @@ to post</p></top>
     %>
   
   
-  <img src="res/yule.gif" alt="Logs"
-  style="width:800;height:600px;">
+  <img src="res/sun.gif" alt="Sun"
+  style="width:500;height:500px;">
 	
-	<p><i>Peering into the ash and cinders, more messages became clear.</i></p>
+	<p><i>The traveler thought about his life and how he got here...</i></p>
     <a href="note.jsp">Toss a note in</a> | 
     <a href="bonfire.jsp">Return</a>
     <br>
@@ -68,32 +68,27 @@ if(user!=null)
 
     if (greetings.isEmpty()) {
         %>
-        <h2>The Cinders show no messages</h2>
+        <h2>The Cinders Have None of Your Messages</h2>
         <%
     } else {
         %>
-        <h2>Messages in The Cinders</h2> 
+        <h2>Your Messages in The Cinders</h2>
+         
         <br>
         <%
         for (Greeting greeting : greetings) {
             pageContext.setAttribute("greeting_content", greeting.getContent());
             pageContext.setAttribute("greeting_user", greeting.getUser());
+            pageContext.setAttribute("greeting_user_email", greeting.getUser().getEmail());
             pageContext.setAttribute("greeting_date", greeting.getDateCST());
             pageContext.setAttribute("greeting_title", greeting.getTitle());
             
            %>
-			<blogTitle><p>${fn:escapeXml(greeting_title)}
-<form action="/bonfire" method="post"> 
-    	
-    	<div><input type="submit" value="Delete" /></div>
-    	<input type="hidden" name="cstdate" value="greeting.getDateCST()"/>
-    	<input type="hidden" name="email" value="greeting.getUser().getEmail()"/>
-    	
-    	
-</form>
+<p><top>			
+<form action="/deletepost" method="post"> <div><input type="submit" value="Delete" /></div><input type="hidden" name="cstdate" value="${fn:escapeXml(greeting_date)}"/><input type="hidden" name="email" value="${fn:escapeXml(greeting_user_email)}"/></form></p></top>
 
 
-</p></blogTitle> 
+<blogTitle><p>${fn:escapeXml(greeting_title)}</p></blogTitle> 
 			<blockquote><i>${fn:escapeXml(greeting_content)} </i></blockquote>
             <blockquote><b><signature>- ${fn:escapeXml(greeting_user.nickname)}</signature></b> <br><date>circa ${fn:escapeXml(greeting_date)}</date></br></blockquote>
             

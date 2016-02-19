@@ -21,7 +21,7 @@
   
   	<body>
   
-  	<p><lightGrey><b>Welcome to the Bonfire Blog!</b> This is a simple blog that allows anyone signed into a google account post. It is in the theme of a bonfire that keeps any written messages burned in its flames. Write down an honest thought and eternalize it by fire. Subscribe to get updated everyday at 5PM CST! Created by Matthew Zhan for EE 461L SP 2016. </lightGrey><a href="admin.jsp">Admin Page</a></p>
+  	<p><lightGrey><b>Welcome to the Bonfire Blog!</b> This is a simple blog that allows anyone signed into a google account post. It is in the theme of a bonfire that keeps any written messages burned in its flames. Write down an honest thought and eternalize it by fire. Subscribe to get updated everyday at 5PM CST! Created by Matthew Zhan for EE 461L SP 2016. </lightGrey></p>
 	<hr>  
     
 <%
@@ -35,7 +35,7 @@
       pageContext.setAttribute("user", user);
 %>
 <top><p>Greetings, ${fn:escapeXml(user.nickname)}
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a></p></top>
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>"> Log Out</a> | <a href="admin.jsp">Admin Page</a></p></top>
 <%
     } else {
 %>
@@ -72,6 +72,7 @@ to post</p></top>
     if (greetings.isEmpty()) {
         %>
         <h2>The Cinders show no messages</h2>
+        <br>
         <%
     } else {
         %>
